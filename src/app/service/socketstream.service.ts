@@ -54,7 +54,7 @@ export class SocketstreamService {
 			console.log("stop record socket id=" + this.socket_io.id);
 			this.stream.end();
 			this.stream = null;
-			var stop_emit_obj = {aaa:"aaa"};
+			var stop_emit_obj = {aaa:"stop confirm"};
 			console.log(stop_emit_obj);
 			this.socket_io.emit('audio_record_end', stop_emit_obj);
 		}
@@ -66,6 +66,7 @@ export class SocketstreamService {
     }
 	  const stream_buffer = new ss.Buffer(audio_array_buffer);
 		this.stream.write(stream_buffer, 'buffer');
+
   }
 
 

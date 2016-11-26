@@ -13,3 +13,7 @@
 
 <input type="button" value="stop_record" (click)="stop_record()">
 
+<span *ngIf="audio_src">
+ audio {{audio_src}}
+ <span class="audio_container"></span>
+</span>

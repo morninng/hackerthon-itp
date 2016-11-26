@@ -2,6 +2,8 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 import {Router} from '@angular/router'
 import {SkywayService} from './../service/skyway.service'
 
+import {RecognitionService} from './../service/recognition.service'
+
 @Component({
   selector: 'app-selection-layout',
   templateUrl: './selection-layout.component.html',
@@ -15,11 +17,13 @@ export class SelectionLayoutComponent implements OnInit {
 
   constructor(private router: Router,
               private el: ElementRef,
-              private skyway: SkywayService) { }
+              private skyway: SkywayService,
+              private recognition: RecognitionService) { }
 
   ngOnInit() {
     this._el = this.el.nativeElement;
     this.skyway.initialize();
+    this.recognition.initialize();
   }
 
   ngAfterViewInit(){

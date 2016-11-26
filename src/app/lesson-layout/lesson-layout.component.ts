@@ -1,6 +1,9 @@
 import { Component, OnInit,ChangeDetectorRef } from '@angular/core';
 import {SkywayService} from './../service/skyway.service'
 
+import {RecognitionService} from './../service/recognition.service'
+
+
 @Component({
   selector: 'app-lesson-layout',
   templateUrl: './lesson-layout.component.html',
@@ -13,7 +16,8 @@ export class LessonLayoutComponent implements OnInit {
   stream_data={};
 
   constructor(private skyway: SkywayService,
-              private change_ref: ChangeDetectorRef) { }
+              private change_ref: ChangeDetectorRef,
+              private recognition: RecognitionService) { }
 
   ngOnInit() {
     this.skyway.room_data_subject.subscribe((room_data)=>{
@@ -22,6 +26,7 @@ export class LessonLayoutComponent implements OnInit {
       this.stream_data = room_data.stream_data || {};
       this.change_ref.markForCheck();
     })
+    this.recognition.start();
   }
 
 }

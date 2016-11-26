@@ -24,7 +24,6 @@ export class SelectionLayoutComponent implements OnInit {
 
   ngAfterViewInit(){
 
-    console.log("ng after vie init of environment_check");
     this.skyway.local_video_stream_subject.subscribe((stream)=>{
       console.log("local video stream subscription");
       if(stream){
@@ -36,19 +35,18 @@ export class SelectionLayoutComponent implements OnInit {
         video_element.muted = true; //own voice is heard when enveironment is checked.
         this.video_container.insertBefore(video_element, null)
         console.log(video_element.src);
-        
       }
     })
   }
 
-
-
   join_as_teacher(){
-    this.router.navigate(['/teacher']);
+    this.router.navigate(['/lesson']);
+    this.skyway.join_room('itp_hackerson');
   }
   
   join_as_student(){
-    this.router.navigate(['/student']);
+    this.router.navigate(['/lesson']);
+    this.skyway.join_room('itp_hackerson');
   }
 
 

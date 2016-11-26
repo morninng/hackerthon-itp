@@ -13,15 +13,15 @@ import {SkywayService} from './service/skyway.service';
 import {SocketstreamService} from './service/socketstream.service';
 
 import { SelectionLayoutComponent } from './selection-layout/selection-layout.component';
-import { TeacherLayoutComponent } from './teacher-layout/teacher-layout.component';
-import { StudentLayoutComponent } from './student-layout/student-layout.component';
+import { LessonLayoutComponent } from './lesson-layout/lesson-layout.component';
+import { OpponentVideoComponent } from './opponent-video/opponent-video.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SelectionLayoutComponent,
-    TeacherLayoutComponent,
-    StudentLayoutComponent
+    LessonLayoutComponent,
+    OpponentVideoComponent
   ],
   imports: [
     BrowserModule,

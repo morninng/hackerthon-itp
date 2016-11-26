@@ -33,7 +33,6 @@ export class OpponentVideoComponent implements OnInit, OnChanges {
 
   }
 
-  s
   
   set_user_video = ()=>{
     this.remove_video_area();

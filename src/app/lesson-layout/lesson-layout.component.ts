@@ -5,6 +5,7 @@ import {RecognitionService} from './../service/recognition.service'
 import { AngularFire } from 'angularfire2';
 
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import {RecordingService} from './../service/recording.service'
 
 @Component({
   selector: 'app-lesson-layout',
@@ -24,7 +25,8 @@ export class LessonLayoutComponent implements OnInit {
               private change_ref: ChangeDetectorRef,
               private recognition: RecognitionService,
               private af: AngularFire,
-              private route: ActivatedRoute,) { }
+              private route: ActivatedRoute,
+              private recording: RecordingService) { }
 
   ngOnInit() {
 
@@ -50,7 +52,14 @@ export class LessonLayoutComponent implements OnInit {
       console.log(this.lesson_data);
     })
 
-    
+    this.recording.initialize();
+  }
+
+  start_record(){
+    this.recording.record_start();
+  }
+  stop_record(){
+    this.recording.record_finish();
   }
 
 }

@@ -39,13 +39,6 @@ export class SelectionLayoutComponent implements OnInit {
         video_element.muted = true; //own voice is heard when enveironment is checked.
         this.video_container.insertBefore(video_element, null)
         console.log(video_element.src);
-<<<<<<< HEAD
-
-        var video = document.getElementsByTagName("video")[0];
-        video.setAttribute("width","60%");
-
-=======
->>>>>>> 46d329d60737bfb0ed55d4373c128bcac53c64ce
       }
     })
   }

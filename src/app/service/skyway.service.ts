@@ -20,21 +20,17 @@ export class SkywayService {
   is_usermedia_set = false;
 
   own_streamURL = null;
-
   room_data_subject
   current_room_name = "";
 
 
   constructor() {
-
     this.local_video_stream_subject = new BehaviorSubject(null);
-
    }
 
 
-  initialize(event_id?, in_roomname?){
+  initialize(){
     console.log("<<skyway service API>> Initialization ");
-
     this.room_data_subject = new BehaviorSubject(this.room_data);
 
     console.log("<<skyway operation>>new peer: with id: ");
@@ -51,7 +47,7 @@ export class SkywayService {
                             height:{ideal: 180}
                           }};
       this.is_own_peer_opened = true;
-      this.get_usermedia(constraints, event_id, in_roomname);
+      this.get_usermedia(constraints);
 
     })
 
@@ -67,14 +63,11 @@ export class SkywayService {
                         }};
     const room_join = false;
     this.is_own_peer_opened = false;
-    this.get_usermedia(constraints, event_id, in_roomname);
-
+    this.get_usermedia(constraints);
   }
 
 
-
-
-  get_usermedia(constraints : any, event_id?: string, in_roomname? : string){
+  get_usermedia(constraints : any){
 
     const promise = navigator.mediaDevices.getUserMedia(constraints);
     promise.then((video_stream)=>{
@@ -85,18 +78,12 @@ export class SkywayService {
       this.audio_available = true;
       this.is_usermedia_set = true;
 
-
-
       if(this.sfu_room){
         this.sfu_room.replaceStream(this.local_stream)
       }
-      if(in_roomname  && in_roomname != this.current_room_name){
-        this.join_room_execute(event_id, in_roomname);
-      }
-
     }).catch(()=>{
       console.log(">>usermedia<< get_usermedia_videoaudio failed");
-      this.get_usermedia_audio(event_id, in_roomname);
+      this.get_usermedia_audio();
     })
   }
 
@@ -111,25 +98,18 @@ export class SkywayService {
       this.audio_available = true;
       this.is_usermedia_set = true;
 
-
-      // this.own_streamURL = URL.createObjectURL(audio_stream);
-      // this.add_stream_on_roomuser(this.user_auth.own_user.id, this.own_streamURL);
-
       if(this.sfu_room){
         this.sfu_room.replaceStream(this.local_stream)
       }
-      if(in_roomname && in_roomname != this.current_room_name){
-        this.join_room_execute( event_id, in_roomname);
-      }
+
+
     }).catch(()=>{
       console.log(">>usermedia<< get_usermedia_audio failed");
       alert("you cannot use both aido and video, so you can just watch but cannot speak anything");
       this.video_available = false;
       this.audio_available = false;
       this.is_usermedia_set = true;
-      if(in_roomname){
-        this.join_room_execute( event_id, in_roomname);
-      }
+
     })
   }
 
@@ -149,26 +129,12 @@ export class SkywayService {
 
   middle_process = false;
 
-  public join_room(type :string, event_id: string, team_name : string){
-    console.log("<<skyway service API>> join_room ");
-    let room_name = ''
-    if(type=='main'){
-      room_name = 'mixidea_' + event_id + '_main';
-    }else if( type === 'preparation'){
-      room_name = 'mixidea_' + event_id + '_' + team_name;
-    }else{
-      return;
-    }
-
-    if(room_name == this.current_room_name){
-      return;
-    }
+  public join_room(room_name){
     this.close_room();
-    this.join_room_execute(event_id, room_name);
-
+    this.join_room_execute(room_name);
   }
 
-  private join_room_execute(event_id: string, in_room_name : string){
+  private join_room_execute( in_room_name : string){
 
    this.sfu_room = this.own_peer.joinRoom(in_room_name, {mode: 'sfu', stream: this.local_stream })
    console.log("<<skyway operation>>join room :room_name", in_room_name);
@@ -196,7 +162,6 @@ export class SkywayService {
         const streamURL = URL.createObjectURL(stream);
         const peerId = stream.peerId;
         this.add_stream_on_roomuser(peerId, streamURL);
-
 
         console.log("<<<<skyway room event>>>>stream is detected: peeerid", peerId);
         console.log("url", streamURL);

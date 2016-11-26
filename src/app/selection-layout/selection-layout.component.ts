@@ -2,6 +2,8 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 import {Router} from '@angular/router'
 import {SkywayService} from './../service/skyway.service'
 
+import {RecognitionService} from './../service/recognition.service'
+
 @Component({
   selector: 'app-selection-layout',
   templateUrl: './selection-layout.component.html',
@@ -15,16 +17,17 @@ export class SelectionLayoutComponent implements OnInit {
 
   constructor(private router: Router,
               private el: ElementRef,
-              private skyway: SkywayService) { }
+              private skyway: SkywayService,
+              private recognition: RecognitionService) { }
 
   ngOnInit() {
     this._el = this.el.nativeElement;
     this.skyway.initialize();
+    this.recognition.initialize();
   }
 
   ngAfterViewInit(){
 
-    console.log("ng after vie init of environment_check");
     this.skyway.local_video_stream_subject.subscribe((stream)=>{
       console.log("local video stream subscription");
       if(stream){
@@ -36,22 +39,25 @@ export class SelectionLayoutComponent implements OnInit {
         video_element.muted = true; //own voice is heard when enveironment is checked.
         this.video_container.insertBefore(video_element, null)
         console.log(video_element.src);
+<<<<<<< HEAD
 
         var video = document.getElementsByTagName("video")[0];
         video.setAttribute("width","60%");
 
+=======
+>>>>>>> 46d329d60737bfb0ed55d4373c128bcac53c64ce
       }
     })
   }
 
-
-
   join_as_teacher(){
-    this.router.navigate(['/teacher']);
+    this.router.navigate(['/lesson']);
+    this.skyway.join_room('itp_hackerson');
   }
 
   join_as_student(){
-    this.router.navigate(['/student']);
+    this.router.navigate(['/lesson']);
+    this.skyway.join_room('itp_hackerson');
   }
 
 

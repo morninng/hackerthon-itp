@@ -70,7 +70,7 @@ input {
 }
 
 body {
-  background-image: url('../assets/people-woman-coffee-meeting.jpg');
+  background-image: url('/assets/people-woman-coffee-meeting.jpg');
   background-position: center center;
   background-repeat: no-repeat;
   background-attachment: fixed;

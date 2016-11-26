@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
-import {Router} from '@angular/router'
+import {Router, NavigationExtras} from '@angular/router'
 import {SkywayService} from './../service/skyway.service'
 
 import {RecognitionService} from './../service/recognition.service'
@@ -23,7 +23,6 @@ export class SelectionLayoutComponent implements OnInit {
   ngOnInit() {
     this._el = this.el.nativeElement;
     this.skyway.initialize();
-    this.recognition.initialize();
   }
 
   ngAfterViewInit(){
@@ -44,12 +43,19 @@ export class SelectionLayoutComponent implements OnInit {
   }
 
   join_as_teacher(){
-    this.router.navigate(['/lesson']);
+    let navigationExtras: NavigationExtras = {
+      queryParams: { 'participate_type': "teacher" }
+    };
+    this.router.navigate(['/lesson'], navigationExtras);
     this.skyway.join_room('itp_hackerson');
   }
 
   join_as_student(){
-    this.router.navigate(['/lesson']);
+
+    let navigationExtras: NavigationExtras = {
+      queryParams: { 'participate_type': "student" }
+    };
+    this.router.navigate(['/lesson'], navigationExtras);
     this.skyway.join_room('itp_hackerson');
   }
 

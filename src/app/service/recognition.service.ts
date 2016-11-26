@@ -12,6 +12,7 @@ export class RecognitionService {
   private recognition = null;
   private speech_start_time : number;
   private transcription_ref = null;
+  private target_lang = null;
 
   private translation_server_url = "https://recording.mixidea.org:3000/translate"
 
@@ -19,16 +20,24 @@ export class RecognitionService {
               private http: Http) { }
 
 
-  initialize(){
+  initialize(participate_type){
     console.log("recognition initialization")
     window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if(!window.SpeechRecognition){
-    this.available = false;
-    return;
+      this.available = false;
+      return;
     }
     this.recognition = new window.SpeechRecognition();
     this.recognition.continuous = true;
-    this.recognition.lang = "ja";
+    if(participate_type=="student"){
+      this.recognition.lang = "ja";
+      this.target_lang = 'en';
+
+    }else if(participate_type=="teacher"){
+      this.recognition.lang = "en";
+      this.target_lang = 'ja';
+    }
+    
 
     this.recognition.onresult = (e)=>{
       const results = e.results;
@@ -40,7 +49,8 @@ export class RecognitionService {
         }
       }
     };
-    this.transcription_ref = "/hackerthon-ipt/student";
+    this.transcription_ref = "/hackerthon-ipt/" + participate_type;
+    this.start()
   }
 
 
@@ -48,9 +58,6 @@ export class RecognitionService {
     if(!this.available){
       return;
     };
-
-
-
     if(this.under_recording){
       return;
     }else{
@@ -77,27 +84,24 @@ export class RecognitionService {
 
 
   execute_with_transcription(text){
-    	console.log(text);
       this.StoreData(text);
       this.translation(text);
   }
 
 
   StoreData(text){
-
       const transcription_context_ref = this.transcription_ref + "/context";
       this.firebase.set_firebase_data(transcription_context_ref, text);
-
   }
 
   translation(text){
 
-    const target_lang = 'en';
-    const translation_ref = this.transcription_ref + "/translate/" + target_lang;
+   // const translation_ref = this.transcription_ref + "/translate/" + this.target_lang;
+    const translation_ref = this.transcription_ref + "/translate/";
     const req_url =
      this.translation_server_url +
       "?text=" + text + 
-      "&target_lang=" + target_lang + 
+      "&target_lang=" + this.target_lang + 
       "&firebase_ref=" + translation_ref;
     
     this.http.get(req_url)
@@ -107,7 +111,5 @@ export class RecognitionService {
         console.log(err);
       });
   }
-
-
 
 }

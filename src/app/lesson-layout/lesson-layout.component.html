@@ -6,14 +6,22 @@
 <app-opponent-video
   [stream_data]="stream_data"></app-opponent-video>
 
-
+<!--
   {{lesson_data | json}}
-
+-->
 <input type="button" value="start_record" (click)="start_record()">
 
 <input type="button" value="stop_record" (click)="stop_record()">
 
 <span *ngIf="audio_src">
- audio {{audio_src}}
+ audio
  <span class="audio_container"></span>
+</span>
+
+<br><br><br><br>
+{{audio_play_time}}<br><br>
+
+<span *ngFor="let transcript of transcript_item | async">
+<span (click)="click_audiosentence(transcript.$key)">
+ {{transcript.$key}}: {{transcript.$value}}   <br>
 </span>

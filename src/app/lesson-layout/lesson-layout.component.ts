@@ -2,7 +2,7 @@ import { Component, OnInit,ChangeDetectorRef,ElementRef, NgZone } from '@angular
 import {SkywayService} from './../service/skyway.service'
 
 import {RecognitionService} from './../service/recognition.service'
-import { AngularFire } from 'angularfire2';
+import { AngularFire,  FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import {RecordingService} from './../service/recording.service'
@@ -23,6 +23,11 @@ export class LessonLayoutComponent implements OnInit {
   audio_src  = null;
   participate_type = null;
   _el
+  transcription_data = {};
+  transcript_item: FirebaseListObservable<any>;
+
+  audio_element;
+  audio_play_time
 
   constructor(private skyway: SkywayService,
               private change_ref: ChangeDetectorRef,
@@ -53,19 +58,24 @@ export class LessonLayoutComponent implements OnInit {
     })
 
 
-    const item = this.af.database.object('/hackerthon-ipt/', { preserveSnapshot: true });
-    item.subscribe((snapshot)=>{
-      this.lesson_data = snapshot.val() || {};
-      console.log('lesson data', this.lesson_data);
-      this.record = this.lesson_data.record || {};
-      const new_audio_src = this.record.audio;
+    const audio_item = this.af.database.object('/hackerthon-ipt/record/audio', { preserveSnapshot: true });
+    audio_item.subscribe((snapshot)=>{
+      // this.lesson_data = snapshot.val() || {};
+      // console.log('lesson data', this.lesson_data);
+      // this.record = this.lesson_data.record || {};
+      const new_audio_src = snapshot.val();
       if(new_audio_src !=this.audio_src && new_audio_src){
         setTimeout(()=>{
           this.set_audio_file();
         },500)
       }
-      this.audio_src = this.record.audio;
+      this.audio_src = new_audio_src;
+
+      //this.transcription_data = this.record.transcription
     })
+
+    this.transcript_item = this.af.database.list('/hackerthon-ipt/record/transcription');
+
 
     this.recording.initialize();
   }
@@ -78,19 +88,39 @@ export class LessonLayoutComponent implements OnInit {
     }
     console.log("==audio element is created with src== : ",this.audio_src);
     const audio_container = this._el.getElementsByClassName("audio_container")[0];
-    const audio_element = document.createElement("audio");
-    audio_element.controls = true;
-    audio_element.src= this.audio_src
-    audio_container.insertBefore(audio_element, null)
+    this.audio_element = document.createElement("audio");
+    this.audio_element.controls = true;
+    this.audio_element.src= this.audio_src;
+
+    this.audio_element.addEventListener("play", ()=>{ this.audio_time_update(); });
+    this.audio_element.addEventListener("seeked", ()=>{ this.audio_time_update(); });
+    this.audio_element.addEventListener("timeupdate", ()=>{ this.audio_time_update(); });
+    audio_container.insertBefore(this.audio_element, null)
     this.change_ref.markForCheck();
     this._ngZone.run(()=>{});
   }
 
+  audio_time_update(){
+    this.audio_play_time = Math.round(this.audio_element.currentTime * 1000);
+    console.log("audio play time update", this.audio_play_time);
+    this.change_ref.markForCheck();
+  }
+
+  click_audiosentence(value){
+    console.log(value);
+    this.audio_element.currentTime = value/1000;
+    this.audio_element.play();
+  }
+  
+
+
   start_record(){
     this.recording.record_start();
+    this.recognition.start();
   }
   stop_record(){
     this.recording.record_finish();
+    this.recognition.stop();
   }
 
 }

@@ -13,6 +13,7 @@ export class RecognitionService {
   private speech_start_time : number;
   private transcription_ref = null;
   private target_lang = null;
+  private audio_start_time = 0;
 
   private translation_server_url = "https://recording.mixidea.org:3000/translate"
 
@@ -30,12 +31,12 @@ export class RecognitionService {
     this.recognition = new window.SpeechRecognition();
     this.recognition.continuous = true;
     if(participate_type=="student"){
-      this.recognition.lang = "ja";
+      this.recognition.lang = "en";
       this.target_lang = 'en';
 
     }else if(participate_type=="teacher"){
       this.recognition.lang = "en";
-      this.target_lang = 'ja';
+      this.target_lang = 'en';
     }
     
 
@@ -49,8 +50,9 @@ export class RecognitionService {
         }
       }
     };
-    this.transcription_ref = "/hackerthon-ipt/" + participate_type;
-    this.start()
+    //this.transcription_ref = "/hackerthon-ipt/" + participate_type;
+    this.transcription_ref = "/hackerthon-ipt/record/";
+    //this.start();
   }
 
 
@@ -61,7 +63,8 @@ export class RecognitionService {
     if(this.under_recording){
       return;
     }else{
-      console.log("--recognition start--")
+      console.log("--recognition start--");
+      this.audio_start_time = new Date().getTime();
       this.recognition.start();
       this.under_recording = true;
     }
@@ -85,19 +88,23 @@ export class RecognitionService {
 
   execute_with_transcription(text){
       this.StoreData(text);
-      this.translation(text);
+      //this.translation(text);
   }
 
-
   StoreData(text){
-      const transcription_context_ref = this.transcription_ref + "/context";
+      const current_time = new Date().getTime();
+      const audio_time = current_time - this.audio_start_time;
+      const transcription_context_ref = this.transcription_ref + "/transcription/" + audio_time;
       this.firebase.set_firebase_data(transcription_context_ref, text);
   }
 
+
+/*
   translation(text){
 
-   // const translation_ref = this.transcription_ref + "/translate/" + this.target_lang;
-    const translation_ref = this.transcription_ref + "/translate/";
+    const translation_ref = this.transcription_ref + "/translate/" + this.target_lang;
+
+
     const req_url =
      this.translation_server_url +
       "?text=" + text + 
@@ -111,5 +118,5 @@ export class RecognitionService {
         console.log(err);
       });
   }
-
+*/
 }

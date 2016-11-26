@@ -16,6 +16,20 @@ import { SelectionLayoutComponent } from './selection-layout/selection-layout.co
 import { LessonLayoutComponent } from './lesson-layout/lesson-layout.component';
 import { OpponentVideoComponent } from './opponent-video/opponent-video.component';
 
+
+import { AngularFireModule, AuthProviders, AuthMethods, } from 'angularfire2';
+
+const firebaseConfig = {
+    apiKey: "AIzaSyBp_ZDqoPygbPs7jMclrBSJ3a99t1Yvr1k",
+    authDomain: "mixidea-91a20.firebaseapp.com",
+    databaseURL: "https://mixidea-91a20.firebaseio.com",
+    storageBucket: "mixidea-91a20.appspot.com",
+    messagingSenderId: "46563705700"
+  };
+
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,7 +41,8 @@ import { OpponentVideoComponent } from './opponent-video/opponent-video.componen
     BrowserModule,
     FormsModule,
     HttpModule,
-    AppRoutingModule
+    AppRoutingModule,
+    AngularFireModule.initializeApp(firebaseConfig)
   ],
   providers: [
     FirebaseService,

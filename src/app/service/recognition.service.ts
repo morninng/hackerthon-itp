@@ -36,10 +36,11 @@ export class RecognitionService {
         if(results[i].isFinal){
           const transcripted_sentence = results[i][0].transcript;
           console.log(transcripted_sentence);
-//          this.execute_with_transcription(transcripted_sentence);
+          this.execute_with_transcription(transcripted_sentence);
         }
       }
     };
+    this.transcription_ref = "/hackerthon-ipt/student";
   }
 
 
@@ -48,7 +49,6 @@ export class RecognitionService {
       return;
     };
 
-    this.transcription_ref = "/transcript/students";
 
 
     if(this.under_recording){
@@ -86,7 +86,7 @@ export class RecognitionService {
   StoreData(text){
 
       const transcription_context_ref = this.transcription_ref + "/context";
-      this.firebase.update_firebase_data(transcription_context_ref, text);
+      this.firebase.set_firebase_data(transcription_context_ref, text);
 
   }
 

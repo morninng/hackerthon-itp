@@ -1,45 +1,39 @@
 
 #header {
-  height:5%;
+  height:5vh;
 }
 
 #icon {
-  font-size: 20px;
+  font-size: 1em;
   float:left;
   margin-left: 10px;
   margin: 0px auto;
 }
 
 #content {
-  height: 95%;
+  height: 90vh;
   position: relative;
   margin: 0px auto;
   text-align: center;
 }
 
 #frame {
-  width: 60%;
-  height: 100%;
+  width: 60vw;
+  height: 90vh;
   margin: 0px auto;
   background: rgba(0,0,0,0.9);
   border-radius: 10px;
 }
 
 video {
-  width: 90%;
+  width: 50vw;
 }
 
 input {
     background-color: #4CAF50;
     border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
     text-decoration: none;
-    display: inline-block;
-    margin: 4px 2px;
-    cursor: pointer;
-    font-size: 0.5em;
+    font-size: 1em;
     border-radius: 3px;
     vertical-align: top;
     box-shadow: .5px .87px 1px 0 #000;
@@ -60,9 +54,11 @@ input {
 }
 
 .own_video {
-  width: 60%;
-  height: 60%;
+  width: auto;
+  height: auto;
+  padding:20px;
   margin: 0px auto;
+  border-radius: 10px;
 }
 
 .user_selection {
@@ -74,7 +70,7 @@ input {
 
 
 body {
-  background-image: url(https://static.pexels.com/photos/7096/people-woman-coffee-meeting.jpg);
+  background: url('../assets/people-woman-coffee-meeting.jpg');
   background-position: center center;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -99,10 +95,12 @@ body {
 
 .teacher {
   display: inline-block;
-  margin-right: 5px;
+  margin-right: 10px;
+  margin-top: 10px;
 }
 
 .student {
   display: inline-block;
-  margin-left: 5px;
+  margin-left: 10px;
+  margin-top: 10px;
 }

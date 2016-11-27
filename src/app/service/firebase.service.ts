@@ -57,7 +57,8 @@ export class FirebaseService {
 
 
   remove_audio_transcript(){
-    this.remove_firebase_data("hackerthon-ipt/record");
+    this.remove_firebase_data("hackerthon-ipt/record/audio");
+    this.remove_firebase_data("hackerthon-ipt/record/transcription");
   }
   
 

@@ -27,7 +27,8 @@ export class LessonLayoutComponent implements OnInit {
   participate_type = null;
   _el
   transcription_data = {};
-  transcript_item: FirebaseListObservable<any>;
+  transcript_item;
+  transcript_arr = [];
 
   audio_element;
   audio_play_time
@@ -78,7 +79,21 @@ export class LessonLayoutComponent implements OnInit {
       //this.transcription_data = this.record.transcription
     })
 
-    this.transcript_item = this.af.database.list('/hackerthon-ipt/record/transcription');
+    const transcript_item = this.af.database.object('/hackerthon-ipt/record/transcription', { preserveSnapshot: true });
+    transcript_item.subscribe((snapshot)=>{
+      const transcript_obj = snapshot.val();
+      this.transcript_arr.length=0;
+      let prev_time = 0;
+      for(var key in transcript_obj){
+        const obj = {
+          start_time : prev_time,
+          finish_time : key,
+          context : transcript_obj[key]
+        }
+        this.transcript_arr.push(obj);
+        prev_time = Number(key);
+      }
+    })
 
 
     this.recording.initialize();
@@ -111,7 +126,7 @@ export class LessonLayoutComponent implements OnInit {
   }
 
   click_audiosentence(value){
-    console.log(value);
+    console.log('start time by click', value);
     this.audio_element.currentTime = value/1000;
     this.audio_element.play();
   }

@@ -11,7 +11,7 @@ import * as ss from "socket.io-stream";
 @Injectable()
 export class SocketstreamService {
 
-  private socket_url = "https://recording.mixidea.org:3000"
+  private socket_url = "https://recording2.mixidea.org"
   private socket_io;
   private stream;
   private is_socket_available = false;

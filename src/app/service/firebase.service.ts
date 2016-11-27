@@ -44,4 +44,9 @@ export class FirebaseService {
   }
 
 
+  remove_audio_transcript(){
+    this.remove_firebase_data("hackerthon-ipt/record");
+  }
+  
+
 }

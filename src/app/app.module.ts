@@ -18,6 +18,7 @@ import { OpponentVideoComponent } from './opponent-video/opponent-video.componen
 
 
 import { AngularFireModule, AuthProviders, AuthMethods, } from 'angularfire2';
+import { OwnVideoComponent } from './own-video/own-video.component';
 
 const firebaseConfig = {
     apiKey: "AIzaSyBp_ZDqoPygbPs7jMclrBSJ3a99t1Yvr1k",
@@ -35,7 +36,8 @@ const firebaseConfig = {
     AppComponent,
     SelectionLayoutComponent,
     LessonLayoutComponent,
-    OpponentVideoComponent
+    OpponentVideoComponent,
+    OwnVideoComponent
   ],
   imports: [
     BrowserModule,

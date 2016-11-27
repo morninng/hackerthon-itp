@@ -15,7 +15,7 @@ export class RecognitionService {
   private target_lang = null;
   private audio_start_time = 0;
 
-  private translation_server_url = "https://recording.mixidea.org:3000/translate"
+  private translation_server_url = "https://recording2.mixidea.org/translate"
 
   constructor(private firebase: FirebaseService,
               private http: Http) { }

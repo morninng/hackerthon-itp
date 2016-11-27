@@ -7,6 +7,9 @@ import { AngularFire,  FirebaseListObservable, FirebaseObjectObservable } from '
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import {RecordingService} from './../service/recording.service'
 
+import {FirebaseService} from './../service/firebase.service';
+
+
 @Component({
   selector: 'app-lesson-layout',
   templateUrl: './lesson-layout.component.html',
@@ -36,7 +39,8 @@ export class LessonLayoutComponent implements OnInit {
               private route: ActivatedRoute,
               private recording: RecordingService,
               private el: ElementRef,
-              private _ngZone: NgZone) { }
+              private _ngZone: NgZone,
+              private firebase: FirebaseService) { }
 
   ngOnInit() {
 
@@ -117,6 +121,7 @@ export class LessonLayoutComponent implements OnInit {
   start_record(){
     this.recording.record_start();
     this.recognition.start();
+    this.firebase.remove_audio_transcript();
   }
   stop_record(){
     this.recording.record_finish();

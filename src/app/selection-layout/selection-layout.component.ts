@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {Router, NavigationExtras} from '@angular/router'
 import {SkywayService} from './../service/skyway.service'
 
@@ -11,36 +11,19 @@ import {RecognitionService} from './../service/recognition.service'
 })
 export class SelectionLayoutComponent implements OnInit {
 
-  _el;
-  video_container
+
+  
   own_user_subscription;
 
   constructor(private router: Router,
-              private el: ElementRef,
               private skyway: SkywayService,
               private recognition: RecognitionService) { }
 
   ngOnInit() {
-    this._el = this.el.nativeElement;
+    
     this.skyway.initialize();
   }
 
-  ngAfterViewInit(){
-
-    this.skyway.local_video_stream_subject.subscribe((stream)=>{
-      console.log("local video stream subscription");
-      if(stream){
-        this.video_container = this._el.getElementsByClassName("own_video")[0];
-        this.video_container.innerHTML = "";
-        const video_element = document.createElement("video");
-        video_element.autoplay = true;
-        video_element.src= window.URL.createObjectURL(stream);
-        video_element.muted = true; //own voice is heard when enveironment is checked.
-        this.video_container.insertBefore(video_element, null)
-        console.log(video_element.src);
-      }
-    })
-  }
 
   join_as_teacher(){
     let navigationExtras: NavigationExtras = {

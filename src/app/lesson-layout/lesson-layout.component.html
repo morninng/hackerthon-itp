@@ -23,7 +23,11 @@
 
 <span *ngFor="let transcript of transcript_arr">
 <span (click)="click_audiosentence(transcript.start_time)">
+
+  <span [ngClass]="{'ongoing':transcript.start_time < audio_play_time && audio_play_time < transcript.finish_time}">
+
   {{transcript.start_time}} - {{transcript.finish_time}} {{transcript.context}}   <br> ||
+  </span>
 </span>
 </span>
 

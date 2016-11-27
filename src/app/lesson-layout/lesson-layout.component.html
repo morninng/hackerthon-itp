@@ -1,26 +1,32 @@
-<p>
-  lesson-layout works!
-</p>
+<div id="header">
+  <p id="icon">
+    hackerthon-itp
+  </p>
+</div>
 
+<div id="lesson">
 
-<app-opponent-video
-  [stream_data]="stream_data"></app-opponent-video>
+  <div class="frame_main">
 
-<!--
-  {{lesson_data | json}}
--->
-<input type="button" value="start_record" (click)="start_record()">
+    <app-opponent-video [stream_data]="stream_data"></app-opponent-video>
+    <app-own-video></app-own-video>
 
-<input type="button" value="stop_record" (click)="stop_record()">
+    <div class="recorder">
+      <input type="button" value="start_record" (click)="start_record()">
+      <input type="button" value="stop_record" (click)="stop_record()">
+    </div>
 
-<span *ngIf="audio_src">
- audio
- <span class="audio_container"></span>
-</span>
+    <div class="player">
+      <span *ngIf="audio_src">
+        audio
+        <span class="audio_container"></span>
+      </span>
+    </div>
 
-<br><br><br><br>
-{{audio_play_time}}<br><br>
+    <div class="script">
+      {{audio_play_time}}
 
+<<<<<<< Updated upstream
 <span *ngFor="let transcript of transcript_arr">
 <span (click)="click_audiosentence(transcript.start_time)">
 
@@ -34,3 +40,19 @@
 <app-chat></app-chat>
 
     <app-own-video>b</app-own-video>
+=======
+      <span *ngFor="let transcript of transcript_arr">
+        <span (click)="click_audiosentence(transcript.start_time)">
+          {{transcript.start_time}} - {{transcript.finish_time}} {{transcript.context}}   <br> ||
+        </span>
+      </span>
+    </div>
+
+  </div>
+
+  <div class="frame_chat">
+  </div>
+
+
+</div>
+>>>>>>> Stashed changes

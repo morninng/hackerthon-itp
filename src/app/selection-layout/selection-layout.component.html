@@ -3,25 +3,25 @@
   <p id="icon">
     hackerthon-itp
   </p>
-
 </div>
 
-<div id="content">
+<div id="selection">
 
-  <div id="frame">
-
-    <app-own-video>a</app-own-video>
-   <!-- -->
-
-    <div class="user_selection">
-      <div class="teacher">
-        <input type="button" (click)="join_as_teacher()" value="join as teacher">
+  <div class="frame">
+    <div class="frame_content">
+      <div class="user_video">
+        <app-own-video></app-own-video>
       </div>
-      <div class="student">
-        <input type="button" (click)="join_as_student()" value="join as student">
+
+      <div class="user_selection">
+        <div class="teacher">
+          <input type="button" (click)="join_as_teacher()" value="join as teacher">
+        </div>
+        <div class="student">
+          <input type="button" (click)="join_as_student()" value="join as student">
+        </div>
       </div>
     </div>
-
   </div>
 </div>
 

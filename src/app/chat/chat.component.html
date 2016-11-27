@@ -1,7 +1,7 @@
 <div class="chatbox">
   <span *ngFor="let chat of chat_items | async">
     <div [ngClass]="{'own_chat':own_participate_type==chat.participate_type, 'opponent_chat':own_participate_type!=chat.participate_type}">
-      {{own_participate_type}} {{chat.context}}
+      {{chat.context}}
     </div>
   </span>
 </div>

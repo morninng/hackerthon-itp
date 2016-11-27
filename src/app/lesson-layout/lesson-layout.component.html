@@ -11,48 +11,39 @@
     <app-opponent-video [stream_data]="stream_data"></app-opponent-video>
     <app-own-video></app-own-video>
 
-    <div class="recorder">
-      <input type="button" value="start_record" (click)="start_record()">
-      <input type="button" value="stop_record" (click)="stop_record()">
-    </div>
-
-    <div class="player">
-      <span *ngIf="audio_src">
-        audio
-        <span class="audio_container"></span>
-      </span>
-    </div>
-
     <div class="script">
-      {{audio_play_time}}
+      <!-- {{audio_play_time}} -->
 
-<<<<<<< Updated upstream
-<span *ngFor="let transcript of transcript_arr">
-<span (click)="click_audiosentence(transcript.start_time)">
-
-  <span [ngClass]="{'ongoing':transcript.start_time < audio_play_time && audio_play_time < transcript.finish_time}">
-
-  {{transcript.start_time}} - {{transcript.finish_time}} {{transcript.context}}   <br> ||
-  </span>
-</span>
-</span>
-
-<app-chat></app-chat>
-
-    <app-own-video>b</app-own-video>
-=======
       <span *ngFor="let transcript of transcript_arr">
         <span (click)="click_audiosentence(transcript.start_time)">
-          {{transcript.start_time}} - {{transcript.finish_time}} {{transcript.context}}   <br> ||
+          <span [ngClass]="{'ongoing':transcript.start_time < audio_play_time && audio_play_time < transcript.finish_time}">
+            <!-- {{transcript.start_time}} - {{transcript.finish_time}}  -->
+            {{transcript.context}}
+          </span>
         </span>
       </span>
     </div>
 
+    <div class="player">
+
+    <div class="recorder">
+        <span *ngIf="audio_src">
+          <span class="audio_container"></span>
+        </span>
+      </div>
+
+      <input type="button" value="start_record" (click)="start_record()">
+      <input type="button" value="stop_record" (click)="stop_record()">
+
+    </div>
+
+
+
   </div>
 
   <div class="frame_chat">
+    <app-chat></app-chat>
   </div>
 
 
 </div>
->>>>>>> Stashed changes

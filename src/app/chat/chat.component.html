@@ -1,20 +1,13 @@
-<p>
-  chat works!
-</p>
-
-<span *ngFor="let chat of chat_items | async">
-
-  <div [ngClass]="{'own_chat':own_participate_type==chat.participate_type, 'opponent_chat':own_participate_type!=chat.participate_type}">
- {{chat.participate_type}} {{own_participate_type}} {{chat.context}}
-  </div>
-
-</span>
-
-
-
+<div class="chatbox">
+  <span *ngFor="let chat of chat_items | async">
+    <div [ngClass]="{'own_chat':own_participate_type==chat.participate_type, 'opponent_chat':own_participate_type!=chat.participate_type}">
+      {{own_participate_type}} {{chat.context}}
+    </div>
+  </span>
+</div>
 
 
 <textarea [(ngModel)]="model.context">
-
 </textarea>
+
 <input type="button" (click)="send_message()" value="send">

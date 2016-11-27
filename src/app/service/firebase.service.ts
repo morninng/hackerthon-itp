@@ -31,6 +31,18 @@ export class FirebaseService {
     });
   }
 
+  push_obj(reference, obj){
+    console.log("reference", reference);
+    console.log("obj", obj);
+    const item_ref = this.af.database.list(reference);
+    const promise = item_ref.push(obj);
+    promise.then(()=>{
+      console.log("success to save")})
+    .catch((err)=>{
+      console.log("fail to save")
+    });
+  }
+
   remove_firebase_data(reference){
 
     const item_ref = this.af.database.object(reference);
